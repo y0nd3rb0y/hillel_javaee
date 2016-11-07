@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="calculator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/calculator_jar</output-path>
+    <root id="archive" name="calculator.jar">
+      <element id="module-output" name="calculator" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.5/commons-lang-2.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
