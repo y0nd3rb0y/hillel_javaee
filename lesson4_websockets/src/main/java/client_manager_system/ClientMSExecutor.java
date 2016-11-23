@@ -15,10 +15,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientMSExecutor extends ThreadPoolExecutor{
     private Map<ClientRunnableEntry, Object> clientsInProgressMap = new ConcurrentHashMap();
     private BlockingQueue<ClientRunnableEntry> waitClientQueue = new LinkedBlockingQueue();
+    private ReentrantLock lock = new ReentrantLock();
 
     public ClientMSExecutor() {
         //nThreads, nThreads,
@@ -47,19 +49,44 @@ public class ClientMSExecutor extends ThreadPoolExecutor{
 
     @Override
     protected void afterExecute(Runnable task, Throwable t) {
+        try {
+            lock.lock();
+            Object client = null;
+            ClientRunnableEntry clientInProgress = null;
+            for (ClientRunnableEntry clientRunnableEntry : clientsInProgressMap.keySet()) {
+                if (task.equals(clientRunnableEntry.getRf())) {
+                    client = clientRunnableEntry.client;
+                    clientInProgress = clientRunnableEntry;
+                    clientsInProgressMap.remove(clientInProgress);
+                    System.out.println("Remove from main clientInProgressMap" + client);
+                    break;
+                }
+            }
 
-        if (t == null && task instanceof RunnableFuture) {
+            for (ClientRunnableEntry clientRunnableEntry : waitClientQueue) {
+                if (clientRunnableEntry.equals(clientInProgress)) {
+                    waitClientQueue.remove(clientRunnableEntry);
+                    clientsInProgressMap.put(clientRunnableEntry, client);
+                    System.out.println("Remove from waitClientQueue" + client);
+                    execute(clientRunnableEntry.getRf());
+
+                }
+            }
+
+        } finally {
+            lock.unlock();
+        }
+        /*if (t == null && task instanceof RunnableFuture) {  //мой вариант
             try {
               Object result = ((Future<?>) task).get();
                 ClientRunnableEntry clientRunnableEntry =
                         new ClientRunnableEntry((RunnableFuture) task, result);
+                clientsInProgressMap.remove(clientRunnableEntry, result);
                 if (waitClientQueue.contains(clientRunnableEntry)) {
-                    clientsInProgressMap.remove(clientRunnableEntry, result);
-                    System.out.println("Client Task has finished");
-                } else {
                     waitClientQueue.remove(clientRunnableEntry);
                     this.submit(clientRunnableEntry.getRf());
                 }
+
             } catch (CancellationException ce) {
                 t = ce;
             } catch (ExecutionException ee) {
@@ -73,7 +100,7 @@ public class ClientMSExecutor extends ThreadPoolExecutor{
 
 
         } else {
-        }
+        }*/
     }
 
 

@@ -2,17 +2,24 @@ package client_manager_system;
 
 import java.util.concurrent.Callable;
 
-public class ClientTask implements Callable {
+public class ClientTask implements Runnable {
     private Client client;
 
     public ClientTask(Client client) {
         this.client = client;
     }
 
-    public Object call() throws Exception {
+    public void run() {
         System.out.println("Client:: " + client);
-        Thread.sleep(2000);
-        return null;
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Client getClient() {
+        return client;
     }
 
     @Override

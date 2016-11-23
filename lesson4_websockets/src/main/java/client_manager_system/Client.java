@@ -9,6 +9,12 @@ public class Client {
         return id;
     }
 
+    public Client(int id, String name, String lastname) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
