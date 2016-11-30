@@ -17,7 +17,7 @@ public class DatabaseClient {
         } else {
             connectionManager = context.getBean("oracleDBConnectionManager", OracleDBConnectionManager.class);
             if(connectionManager.establishConnection(new Socket())){
-                System.out.println("Connection established with MySQL database");
+                System.out.println("Connection established with OracleDB database");
             } else {
                 System.out.println("Connection failed");
             }

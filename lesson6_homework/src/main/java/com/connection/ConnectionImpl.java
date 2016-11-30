@@ -1,23 +1,26 @@
 package com.connection;
 
 import com.database.Socket;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ConnectionImpl implements Connection{
     private Socket socket;
 
     public boolean establishConnection(Socket socket) {
         socket.setConnection(this);
-        if(socket.validateConnection(this)){
-            return true;
-        }
-        return false;
+        return socket.validateConnection(this);
     }
 
     public boolean establishConnection(String customSocket) {
         this.setSocket(new Socket(this));
         socket.setSocket(customSocket);
-        socket.validateConnection(this);
-        return false;
+        return  socket.validateConnection(this);
+
+    }
+
+    public boolean close() {
+        return true;
     }
 
     public Socket getSocket() {

@@ -4,8 +4,14 @@ package com.connection_manager;
 import com.connection.Connection;
 import com.connection.ConnectionImpl;
 import com.database.Socket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MySQLConnectionManager implements ConnectionManager {
+
+    @Autowired
     private Connection connection;
 
     public Connection getConnection() {
@@ -23,10 +29,7 @@ public class MySQLConnectionManager implements ConnectionManager {
     public MySQLConnectionManager() {}
 
     public boolean establishConnection(Socket socket){
-        if(connection.establishConnection(socket)){
-            return true;
-        }
-        return false;
+        return connection.establishConnection(socket);
     }
 
     public boolean establishConnection(String string) {

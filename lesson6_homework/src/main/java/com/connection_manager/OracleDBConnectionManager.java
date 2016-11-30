@@ -2,8 +2,14 @@ package com.connection_manager;
 
 import com.connection.Connection;
 import com.database.Socket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OracleDBConnectionManager implements ConnectionManager{
+
+    @Autowired
     private Connection connection;
 
     public Connection getConnection() {
