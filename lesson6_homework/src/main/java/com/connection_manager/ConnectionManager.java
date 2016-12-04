@@ -1,7 +1,7 @@
 package com.connection_manager;
 
 
-import com.database.Socket;
+import com.connection.Socket;
 
 public interface ConnectionManager {
     boolean establishConnection(Socket Socket);

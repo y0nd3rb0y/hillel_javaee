@@ -1,14 +1,17 @@
 package com.connection_manager;
 
 import com.connection.Connection;
-import com.database.Socket;
+import com.connection.Socket;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(JUnit4.class)
 public class UT_OracleDBConnectionManager {
     private Connection connection;
     private Socket socket;

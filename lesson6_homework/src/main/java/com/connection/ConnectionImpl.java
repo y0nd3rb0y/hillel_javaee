@@ -1,6 +1,5 @@
 package com.connection;
 
-import com.database.Socket;
 import org.springframework.stereotype.Repository;
 
 @Repository

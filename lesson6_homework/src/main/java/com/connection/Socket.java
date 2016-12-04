@@ -1,4 +1,4 @@
-package com.database;
+package com.connection;
 
 import com.connection.Connection;
 import com.connection.ConnectionImpl;

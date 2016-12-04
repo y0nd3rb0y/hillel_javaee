@@ -1,11 +1,9 @@
 package com;
 
-import com.connection.Connection;
-import com.connection.ConnectionImpl;
 import com.connection_manager.ConnectionManager;
 import com.connection_manager.MySQLConnectionManager;
 import com.connection_manager.OracleDBConnectionManager;
-import com.database.Socket;
+import com.connection.Socket;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class DatabaseClient {
