@@ -1,2 +1,3 @@
-#!/bin/bash
+#!#!/bin/bash
 echo "ghdoiggodihokgdfhofighoidhfio"
+echo "llllllllllllllllll"
